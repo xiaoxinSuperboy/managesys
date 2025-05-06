@@ -1,0 +1,83 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>超级公司</title>
+    <link rel="stylesheet" href="{% static 'plugings/bootstrap-4.6.2/css/bootstrap.css' %}">
+</head>
+<body>
+    <script src="{% static 'plugings/bootstrap-4.6.2/js/bootstrap.min.js' %}"></script>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="#">超级公司管理系统</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="/web/depart/list">部门管理 </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Link</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a  class="nav-link dropdown-toggle" href="/user/users/list/" role="button" data-toggle="dropdown" aria-expanded="false">
+              用户管理
+            </a>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="#">人事部</a>
+              <a class="dropdown-item" href="#">销售部</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#">开发部</a>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a href="/phone/numlist/" class="nav-link " >靓号管理</a>
+          </li>
+        </ul>
+        <div>
+            {#<input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">#}
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit" style="margin-right: 10px">登录</button>
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit" style="margin-right: 10px">注册</button>
+        </div>
+          <div class="dropdown">
+              <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+                个人信息
+              </button>
+              <div class="dropdown-menu">
+                <button class="dropdown-item" type="button">Action</button>
+                <button class="dropdown-item" type="button">Another action</button>
+                <button class="dropdown-item" type="button">Something else here</button>
+              </div>
+          </div>
+      </div>
+    </nav>
+
+    <a href="/web/depart/add/" class="btn btn-primary" style="margin-top: 10px; margin-left: 10px">新建部门</a>
+    <div class="card-body">
+        <table class="table table-bordered" style="width: 50vw">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>部门名</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for obj in departList %}
+                    <tr>
+                        <td>{{ obj.id }}</td>
+                        <td>{{ obj.title }}</td>
+                        <td>
+                            <a href="/web/depart/edit/?title={{ obj.title }}" class="btn btn-primary btn-sm">编辑</a>
+                            <a href="/web/depart/delete/?nid={{ obj.id }}" class="btn btn-danger btn-sm">删除</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

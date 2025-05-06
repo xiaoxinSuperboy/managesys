@@ -1,0 +1,70 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>修改部门</title>
+    <link rel="stylesheet" href="{% static 'plugings/bootstrap-4.6.2/css/bootstrap.css' %}">
+
+</head>
+<body>
+    <script src="{% static 'plugings/bootstrap-4.6.2/js/bootstrap.min.js' %}"></script>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="#">超级公司管理系统</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">部门管理 <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Link</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+              部门经理
+            </a>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="#">人事部</a>
+              <a class="dropdown-item" href="#">销售部</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#">开发部</a>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a href="/phone/numlist/" class="nav-link " >靓号管理</a>
+          </li>
+        </ul>
+        <div>
+            {#<input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">#}
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit" style="margin-right: 10px">登录</button>
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit" style="margin-right: 10px">注册</button>
+        </div>
+          <div class="dropdown">
+              <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+                个人信息
+              </button>
+              <div class="dropdown-menu">
+                <button class="dropdown-item" type="button">Action</button>
+                <button class="dropdown-item" type="button">Another action</button>
+                <button class="dropdown-item" type="button">Something else here</button>
+              </div>
+          </div>
+      </div>
+    </nav>
+    <form method="post" style="margin:50px auto; width:50vw; border: 1px solid lightgray; border-radius: 10px">
+        {% csrf_token %}
+      <div class="form-group">
+        <label for="exampleInputPassword1" >修改原有部门</label><hr>
+          <label for="exampleInputPassword1">名称</label>
+        <input type="text"  name="depart_name" value="{{ old_title }}" class="form-control" id="exampleInputPassword1" style="width: 600px; margin: auto 10px">
+      </div>
+      <div class="form-group form-check">
+        <input type="checkbox" class="form-check-input" id="exampleCheck1">
+        <label class="form-check-label" for="exampleCheck1">Check me out</label>
+      </div>
+      <button type="submit" class="btn btn-primary">提交</button>
+    </form>

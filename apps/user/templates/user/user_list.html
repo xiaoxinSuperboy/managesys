@@ -1,0 +1,42 @@
+{% extends 'public.html' %}
+{% block title %}
+    <title>用户列表</title>
+{% endblock %}
+{% block content %}
+        <a href="/user/users/add/" class="btn btn-primary" style="margin-top: 10px; margin-left: 10px">新建用户</a>
+        <a href="/user/users/add/model/" class="btn btn-primary" style="margin-top: 10px; margin-left: 10px">新建用户(ModelForm)</a>
+    <div class="card-body">
+        <table class="table table-bordered" style="width: 50vw">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>用户名名</th>
+                    <th>密码</th>
+                    <th>年龄</th>
+                    <th>账户余额</th>
+                    <th>入职时间</th>
+                    <th>性别</th>
+                    <th>所属部门</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for obj in users_list %}
+                <tr>
+                    <td>{{ obj.id }}</td>
+                    <td>{{ obj.name }}</td>
+                    <td>{{ obj.password }}</td>
+                    <td>{{ obj.age }}</td>
+                    <td>{{ obj.account }}</td>
+                    <td>{{ obj.create_time|date:'Y-m-d'}}</td>
+                    <td>{{ obj.get_gender_display }}</td>
+                    <td>{{ obj.depart.title }}</td>
+                    <td>
+                        <a href="/user/users/edit/?nid={{ obj.id }}" class="btn btn-primary btn-sm">编辑</a>
+                        <a href="/user/users/delete/?nid={{ obj.id }}" class="btn btn-danger btn-sm">删除</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
