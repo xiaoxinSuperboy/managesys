@@ -19,15 +19,25 @@ def num_list(request):
     search_data = request.GET.get('q', '')
     if search_data:
         data_dict['mobile__contains'] = search_data
-
-    # 根据用户需要访问的页码计算起始位置
+    # from apps.phone.utils.pagination import Pagination
+    # data = models.Phone.objects.filter(**data_dict)
+    # page_obj = Pagination(request, data)
+    # page_data = page_obj.page_data
+    # # 根据用户需要访问的页码计算起始位置
     page = int(request.GET.get('page', 1))
+    page_size = 10
+    lpage = page - 1
+    rpage = page + 1
     next_page = page + 1
     ago_page = page - 1
-    start = (page - 1) * 10
-    end = page * 10
+    start = (page - 1) * page_size
+    end = page * page_size
     data = models.Phone.objects.filter(**data_dict)[start:end]
-    return render(request, 'phone/numlist.html', {'data': data, 'search_data': search_data, 'next_page': next_page, 'ago_page': ago_page})
+    # 获取数据库数据总条数
+    total_count = models.Phone.objects.filter(**data_dict).count()
+
+    return render(request, 'phone/numlist.html', {'data': data, 'search_data': search_data, 'next_page': next_page, 'ago_page': ago_page,
+                                                  'page': page, 'lpage': lpage, 'rpage': rpage})
 
 
 from django.core.validators import RegexValidator

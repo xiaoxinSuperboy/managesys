@@ -1,0 +1,33 @@
+{% extends 'public.html' %}
+{% block title %}
+    <title>管理员列表</title>
+{% endblock %}
+{% block content %}
+        <a href="/manager/add/" class="btn btn-primary" style="margin-top: 10px; margin-left: 10px">新建管理员</a>
+        <a href="/manager/add/" class="btn btn-primary" style="margin-top: 10px; margin-left: 10px">新建管理员(ModelForm)</a>
+    <div class="card-body">
+        <table class="table table-bordered" style="width: 50vw">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>用户名</th>
+                    <th>密码</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for obj in data %}
+                <tr>
+                    <td>{{ obj.id }}</td>
+                    <td>{{ obj.username }}</td>
+                    <td>**********</td>
+                    <td>
+                        <a href="/manager/{{ obj.id }}/edit/" class="btn btn-primary btn-sm">编辑</a>
+                        <a href="/manager/{{ obj.id }}/delete/" class="btn btn-danger btn-sm">删除</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

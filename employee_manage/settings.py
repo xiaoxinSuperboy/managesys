@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'apps.web.apps.WebConfig',
     'apps.user.apps.UserConfig',
     'apps.phone.apps.PhoneConfig',
+    'apps.manager.apps.ManagerConfig',
 ]
 
 MIDDLEWARE = [

@@ -1,0 +1,22 @@
+{% extends 'public.html' %}
+{% block title %}
+    <title>{{ Title }}(ModelForm)</title>
+{% endblock %}
+{% block content %}
+    <form method="post" style="margin:50px auto; width:50vw; border: 1px solid lightgray; border-radius: 10px" novalidate>
+        {% csrf_token %}
+        <label for="exampleInputPassword1">{{ title }}</label><hr>
+        {% for item in form %}
+        <div class="form-group" style="margin: 5px 20px">
+            {{ item.label }}:<br>
+            {{ item }}<br>
+            <span style="color: red">{{ item.errors.0 }}</span>  <!--若有错误，拿到第一个-->
+        </div>
+        {% endfor %}
+        <div class="form-group form-check">
+            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+            <label class="form-check-label" for="exampleCheck1">Check me out</label>
+        </div>
+        <button type="submit" class="btn btn-primary">提交</button>
+    </form>
+{% endblock %}
