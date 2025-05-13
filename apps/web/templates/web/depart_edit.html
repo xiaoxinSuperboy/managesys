@@ -8,7 +8,9 @@
 
 </head>
 <body>
+    <script src="{% static 'plugings/bootstrap-4.6.2/jquery/jquery.js' %}"></script>
     <script src="{% static 'plugings/bootstrap-4.6.2/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'plugings/bootstrap-4.6.2/js/bootstrap.bundle.min.js' %}"></script>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <a class="navbar-brand" href="#">超级公司管理系统</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -27,12 +29,6 @@
             <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
               部门经理
             </a>
-            <div class="dropdown-menu">
-              <a class="dropdown-item" href="#">人事部</a>
-              <a class="dropdown-item" href="#">销售部</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">开发部</a>
-            </div>
           </li>
           <li class="nav-item">
             <a href="/phone/numlist/" class="nav-link " >靓号管理</a>
@@ -48,9 +44,9 @@
                 个人信息
               </button>
               <div class="dropdown-menu">
-                <button class="dropdown-item" type="button">Action</button>
-                <button class="dropdown-item" type="button">Another action</button>
-                <button class="dropdown-item" type="button">Something else here</button>
+                <a class="dropdown-item" href="#">修改个人信息</a>
+                <a class="dropdown-item" href="#">设置</a>
+                <a class="dropdown-item" href="/user/users/logout/">注销</a>
               </div>
           </div>
       </div>

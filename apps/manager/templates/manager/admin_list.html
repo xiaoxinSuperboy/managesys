@@ -13,6 +13,7 @@
                     <th>用户名</th>
                     <th>密码</th>
                     <th>操作</th>
+                    <th>重置密码</th>
                 </tr>
             </thead>
             <tbody>
@@ -25,6 +26,7 @@
                         <a href="/manager/{{ obj.id }}/edit/" class="btn btn-primary btn-sm">编辑</a>
                         <a href="/manager/{{ obj.id }}/delete/" class="btn btn-danger btn-sm">删除</a>
                     </td>
+                    <td><a href="/manager/{{ obj.id }}/reset/" class="btn btn-danger btn-sm">重置密码</a></td>
                 </tr>
             {% endfor %}
             </tbody>

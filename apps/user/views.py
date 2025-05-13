@@ -2,6 +2,9 @@ from django.shortcuts import render, redirect, HttpResponse
 from apps.user import models
 from apps.web.models import Department
 from django import forms
+from apps.manager.utils import encrypt
+from apps.manager import models as manager_models
+from apps.user.utils import verifycode
 
 
 # Create your views here.
@@ -33,23 +36,96 @@ def user_add(request):
     return redirect('/user/users/list/')
 
 
+class LoginForm(forms.Form):
+    username = forms.CharField(
+        label='用户名',
+        widget=forms.TextInput(attrs={'class': 'form-control'}),
+        required=True,
+    )
+    password = forms.CharField(
+        label='密码',
+        widget=forms.PasswordInput(attrs={'class': 'form-control'}, render_value=True),
+        required=True
+    )
+    code = forms.CharField(
+        label='验证码',
+        widget=forms.TextInput(attrs={'class': 'form-control', 'style': 'margin-left:15px'}),
+        required=True
+    )
+
+    def clean_password(self):
+        # 拿到password
+        pwd = self.cleaned_data.get('password')
+        md5_pwd = encrypt.md5(pwd)
+        return md5_pwd
+
+
 def user_login(request):
     """登录"""
     if request.method == 'GET':
-        return render(request, 'user/user_login.html')
+        form = LoginForm()
+        return render(request, 'user/user_login.html', {'form': form})
     # 认为post请求
     # 拿到用户登录的数据
-    username = request.POST.get('username')
-    password = request.POST.get('password')
-    # 拿到数据库所有用户信息
-    userslist = models.Employee.objects.all()
-    print(username)
-    print(password)
-    for item in userslist:
-        if item.name == username and item.password == password:
-            return render(request, 'user/login_successful.html')
-    else:
-        return HttpResponse('用户名或密码错误')
+    form = LoginForm(data=request.POST)
+    if form.is_valid():
+        # 对验证码进行校验
+        # 拿到用户输入的验证码 ,并且删除code防止在数据库查询用户名密码时查询到code
+        in_code = form.cleaned_data.pop('code')
+        print(in_code)
+        # 拿到session中的code
+        code = request.session.get('image_code', '')
+        print(code)
+        # 去与session中的验证码进行比较
+        if in_code != code:
+
+            # 验证成功，获取到的用户名和密码
+            # print(form.cleaned_data)
+            form.add_error('code', '验证码错误')
+            return render(request, 'user/user_login.html', {'form': form})
+            # 去数据库校验用户名和密码
+        cur_obj = manager_models.Manager.objects.filter(**form.cleaned_data).first()
+        # 未匹配到对象
+        if not cur_obj:
+            # 增加一个错误信息
+            form.add_error('password', '用户名或密码错误')
+            return render(request, 'user/user_login.html', {'form': form})
+
+
+            # 匹配成功,即用户名和密码正确
+            # 网站生成随机字符串，写到用户浏览器的cookie中,在写入到session
+        request.session['info'] = {
+                    'id': cur_obj.id,
+                    'username': cur_obj.username
+                }
+        request.session.set_expiry(60*60*24*7)
+        return redirect('/manager/admin/list/')
+    return render(request, 'user/user_login.html', {'form': form})
+
+
+from io import BytesIO
+
+
+def image_code(request):
+    """图片验证码"""
+    # 调用含pillow的函数,生成图片
+    img, code_str = verifycode.verify_code()
+    print(code_str)
+    # 把验证码写入到session中
+    request.session['image_code'] = code_str
+    # 给session设置60秒超时
+    request.session.set_expiry(60)
+    # 图片写入内存
+    stream = BytesIO()
+    img.save(stream, 'png')
+
+    return HttpResponse(stream.getvalue())
+
+
+def user_logout(request):
+    """注销"""
+    request.session.clear()
+    return redirect('/user/users/login/')
 
 
 # 创建一个类继承modelform

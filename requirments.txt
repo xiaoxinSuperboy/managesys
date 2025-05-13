@@ -1,6 +1,7 @@
 asgiref==3.8.1
 Django==3.2
 mysqlclient==2.2.7
+pillow==11.2.1
 pytz==2025.2
 sqlparse==0.5.3
 typing_extensions==4.13.2

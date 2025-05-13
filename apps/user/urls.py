@@ -7,4 +7,6 @@ urlpatterns = [
     path('users/add/model/', views.user_addmodel),
     path('users/edit/', views.user_edit),
     path('users/delete/', views.user_delete),
+    path('users/logout/', views.user_logout),
+    path('image/code/', views.image_code)
 ]

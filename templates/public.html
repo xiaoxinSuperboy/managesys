@@ -7,7 +7,9 @@
     <link rel="stylesheet" href="{% static 'plugings/bootstrap-4.6.2/css/bootstrap.css' %}">
 </head>
 <body>
+    <script src="{% static 'plugings/bootstrap-4.6.2/jquery/jquery.js' %}"></script>
     <script src="{% static 'plugings/bootstrap-4.6.2/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'plugings/bootstrap-4.6.2/js/bootstrap.bundle.min.js' %}"></script>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <a class="navbar-brand" href="#">超级公司管理系统</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -23,15 +25,9 @@
             <a class="nav-link" href="/manager/admin/list/">管理员账户</a>
           </li>
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="/user/users/list" role="button" data-toggle="dropdown" aria-expanded="false">
+            <a class="nav-link " href="/user/users/list" role="button" >
               用户管理
             </a>
-            <div class="dropdown-menu">
-              <a class="dropdown-item" href="#">人事部</a>
-              <a class="dropdown-item" href="#">销售部</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">开发部</a>
-            </div>
           </li>
           <li class="nav-item">
             <a class="nav-link " href="/phone/numlist/">靓号管理</a>
@@ -39,20 +35,19 @@
         </ul>
         <div>
             {#<input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">#}
-          <a href="/user/users/login/"><button class="btn btn-outline-success my-2 my-sm-0" type="submit" style="margin-right: 10px">登录</button></a>
           <a href="/user/users/add/"><button class="btn btn-outline-success my-2 my-sm-0" type="submit" style="margin-right: 10px">注册</button></a>
         </div>
-          <div class="dropdown">
-              <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
-                个人信息
+          <div class="btn-group dropdown">
+              <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false" style="margin-right: 100px">
+                {{ request.session.info.username }}
               </button>
               <div class="dropdown-menu">
-                <button class="dropdown-item" type="button">Action</button>
-                <button class="dropdown-item" type="button">Another action</button>
-                <button class="dropdown-item" type="button">Something else here</button>
+                <a class="dropdown-item" href="#">个人信息</a>
+                <a class="dropdown-item" href="#">设置</a>
+                <a class="dropdown-item" href="/user/users/logout/">注销</a>
               </div>
           </div>
-      </div>
+        </div>
     </nav>
     {% block content %}{% endblock %}
 </body>
